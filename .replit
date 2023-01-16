@@ -1,0 +1,4 @@
+run = "./swoole-cli http.php"
+
+[nix]
+channel = "stable-22_11"
