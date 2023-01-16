@@ -15,7 +15,7 @@ https://github.com/findnr/swoole_websocket_html
 #第一步
 git clone https://github.com/findnr/swoole_websocket_html
 #第二步
-cd swoole_websocket_html
+cd swoole_websocket_html/msghtml
 #第三步
 pnpm install
 #第四步
