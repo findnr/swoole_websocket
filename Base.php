@@ -5,7 +5,7 @@ class Base{
   public $table;
   public $data;
   public $cha;
-  public function __construct(&$ws,&$frame,&$table,&$data,&$cha){
+  public function __construct($ws,$frame,$table,$data,$cha){
     $this->ws=$ws;
     $this->frame=$frame;
     $this->table=$table;

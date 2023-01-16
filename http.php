@@ -21,7 +21,7 @@ $ws->on('Open', function ($ws, $request) {
 });
 
 //监听WebSocket消息事件
-$ws->on('Message', function ($ws, $frame) use(&$table,&$cha) {
+$ws->on('Message', function ($ws, $frame) use($table,$cha) {
     $data = json_decode($frame->data,true);
     list($controller, $action) = explode('/', trim($data['path'], '/'));
     $controller=ucfirst($controller);
@@ -30,20 +30,20 @@ $ws->on('Message', function ($ws, $frame) use(&$table,&$cha) {
 });
 
 //监听WebSocket连接关闭事件
-$ws->on('Close', function ($ws, $fd) use (&$table){
+$ws->on('Close', function ($ws, $fd) use ($table){
     if($table->get((string)$fd)) $table->del((string)$fd);
     sendList($ws,$table);
     //echo "client-{$fd} is closed\n";
 });
-\Swoole\Timer::tick(1000,function()use(&$cha,&$ws,&$table){
-  if($cha->pop()){
+\Swoole\Timer::tick(1000,function()use($cha,$ws,$table){
+  if($cha->pop(0.5)){
       sendList($ws,$table);
   }
 });
-\Swoole\Timer::tick(300000,function()use(&$cha,&$ws,&$table){
+\Swoole\Timer::tick(300000,function()use($cha,$ws,$table){
       sendList($ws,$table);
 });
-function sendList(&$ws,&$table){
+function sendList($ws,$table){
   $del=[];
   $data=[];
       foreach($table as $k=> $v){
